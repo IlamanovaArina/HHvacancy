@@ -23,73 +23,47 @@ class JSONSaver:
         self.name = name
         self.path = os.path.join(os.path.dirname(__file__), "..", "data", self.name)
 
-    def __save_to_file(self, vacancies: list[dict]) -> None:
-        """Сохраняет данные в json-файл"""
-        with open(self.path, "w", encoding="utf-8") as f:
-            json.dump(vacancies, f, ensure_ascii=False)
-
-    def __read_file(self) -> list[dict]:
-        """Считывает данные из json-файла"""
+    def open_json(self):
         try:
-            with open(self.path, encoding="utf-8") as f:
-                data = json.load(f)
-        except FileNotFoundError:
-            data = []
+            with open(self.path) as f:
+                return json.load(f)
         except JSONDecodeError:
-            data = []
-            return data
+            return []
+        except Exception as e:
+            print(e)
+            return []
 
-    def add_vacancy(self, vacancy: Vacancy) -> None:
-        """Добавляет вакансию в файл"""
-        vacancies_list = self.__read_file()
-        print(vacancies_list)
-        if vacancy.alternate_url not in [vac["employer"]["alternate_url"] for vac in vacancies_list]:
-            vacancies_list.append(vacancy.to_dict())
-            self.__save_to_file(vacancies_list)
+    def add_vacancy(self, vacancy):
+        vacancy_list = self.open_json()
+        new_list = []
+        for vacancy_dict in vacancy_list:
+            new_list.append(vacancy_dict.get("alternate_url"))
+        if vacancy.alternate_url not in new_list:
+            vacancy_list.append(vacancy.to_dict())
+            with open(self.path, "w") as file:
+                json.dump(vacancy_list, file, ensure_ascii=False, indent=4)
         else:
-            print("Ошибка")
-
-    # def open_json(self):
-    #     name = self.path
-    #     with open(name) as f:
-    #         return json.load(f)
-
-    # def add_vacancy(self, vacancy):
-    #     dict_vac = {"name": vacancy.name,
-    #                 "alternate_url": vacancy.alternate_url,
-    #                 "salary": vacancy.salary,
-    #                 "requirement": vacancy.requirement}
-    #     with open(self.path, "a") as file:
-    #         json.dumps([])
-    #         json.dump(dict_vac, file, ensure_ascii=False, indent=4)
-            # comma = json.dumps()
-            # json.dump(comma, file)
-
-    # def save_json(self, vacancy):
-    #     with open(self.path, "w") as file:
-    #         json.dump(list_, file, ensure_ascii=False, indent=4)
+            return "Данная вакансия уже существует"
 
     def delete_vacancy(self, vacancy):
-        open_json = self.open_json() # [{}], [{}], [{}]
-        # print(open_json)
-        # print(type(open_json))
+        open_json = self.open_json() # [{}, {}, {}]
+        new_list_url = [] # "<grger>"
+        for vacancy_dict in open_json:
+            new_list_url.append(vacancy_dict.get("alternate_url"))
+        if vacancy.alternate_url in new_list_url:
+            for i in range(len(open_json)):
+                if open_json[i-1]['alternate_url'] == vacancy.alternate_url:
+                    del open_json[i-1]
+        else:
+            return "Вакансия не найдена."
 
-        dict_vac = {"name": vacancy.name,
-                    "alternate_url": vacancy.alternate_url,
-                    "salary": vacancy.salary,
-                    "requirement": vacancy.requirement}
-        list_ = []
-        for dic in open_json:
-            if dict_vac == dic:
-                index_dict = open_json.index(dict_vac)
-                list_ = open_json.remove(index_dict)
-
-        # with open(self.path, "w") as file:
-        #     json.dump(list_, file, ensure_ascii=False, indent=4)
+        with open(self.path, "w") as file:
+            json.dump(open_json, file, ensure_ascii=False, indent=4)
 
 
 if __name__ == "__main__":
-    vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123456>", "100 000-150 000 руб.",
-                      "Опыт работы от 3 лет...")
-    j = JSONSaver("makenzy.json")
-    # print(j.add_vacancy(vacancy))
+    vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123479>", "2",
+                      "Опыт работы от 3 лет...", "1", "100 000-150 000 руб.")
+    obj = JSONSaver("data.json")
+    # obj.add_vacancy(vacancy)
+    obj.delete_vacancy(vacancy)

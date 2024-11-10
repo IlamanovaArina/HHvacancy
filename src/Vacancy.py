@@ -151,9 +151,9 @@ if __name__ == "__main__":
                   "Требования: опыт работы от 3 лет...", "График1", 15000, "Описание1")
     ex3 = Vacancy("Python Developer", "<https://hh.ru/vacancy/123456>", "100 000-150 000 руб.",
                   "Требования: опыт работы от 3 лет...", "График2", 10000, "Описание2")
-    print(ex)
+    # print(ex)
     # print(repr(ex2))
-    print(ex3)
+    # print(ex3)
     # print(ex2 == ex3)
     # print(ex2 < ex3)
     # print(ex2 <= ex3)
