@@ -1,5 +1,3 @@
-import os
-
 from src.JSONSaver import JSONSaver
 from src.Vacancy import Vacancy
 from src.class_HH import HeadHunterAPI
@@ -28,6 +26,7 @@ if __name__ == "__main__":
 
     # Функция для взаимодействия с пользователем
     def user_interaction():
+        """ Функция для взамиодействия с пользователем """
         platforms = ["HeadHunter"]
         top_n = int(input("Введите количество вакансий для вывода в топ N: "))
         filter_words = input("Введите ключевые слова для фильтрации вакансий: ").split()

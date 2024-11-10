@@ -21,6 +21,7 @@ class HeadHunterAPI(Parser):
         return self.__vacancies
 
     def __connect(self):
+        """ Метод для get запроса """
         try:
             response = requests.get(self.__url, headers=self.__headers, params=self.__params)
             if response.status_code == 200:
@@ -31,6 +32,8 @@ class HeadHunterAPI(Parser):
             print(e)
 
     def load_vacancies(self, keyword):
+        """ Данный метод позволяет отобрать всю информацию по вакансиям,
+        в котором есть ключевое слово (переменная - keyword) """
         self.__params['text'] = keyword
         while self.__params.get('page') != 5:
             response = self.__connect()

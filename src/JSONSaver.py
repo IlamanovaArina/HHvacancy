@@ -11,6 +11,8 @@ class JSONSaver:
         self.path = os.path.join(os.path.dirname(__file__), "..", "data", self.name)
 
     def open_json(self):
+        """ Метод открывающий json-файл, если возникает
+        какая-либо ошибка, возвращается пустой список """
         try:
             with open(self.path) as f:
                 return json.load(f)
@@ -21,6 +23,7 @@ class JSONSaver:
             return []
 
     def add_vacancy(self, vacancy):
+        """ Метод для добавления вакансии в файл json """
         vacancy_list = self.open_json()
         new_list = []
         for vacancy_dict in vacancy_list:
@@ -33,6 +36,7 @@ class JSONSaver:
             return "Данная вакансия уже существует"
 
     def delete_vacancy(self, vacancy):
+        """ Метод для удаления вакансии из json-файла """
         open_json = self.open_json()
         new_list_url = []
         for vacancy_dict in open_json:

@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class Parser(ABC):
+    """ Абстрактный класс для работы с API HeadHunter """
 
     @abstractmethod
     def load_vacancies(self, keyword):
@@ -9,19 +10,9 @@ class Parser(ABC):
         pass
 
 
-class JSONABC(ABC):
-
-    def open_json(self):
-        pass
-
-    def add_vacancy(self, vacancy):
-        pass
-
-    def delete_vacancy(self, vacancy):
-        pass
-
-
 class VacancyABC:
+    """ Абстрактный класс для работы с полученными
+    вакансиями и приведения к определённому виду """
 
     @abstractmethod
     @classmethod
@@ -30,4 +21,17 @@ class VacancyABC:
 
     @abstractmethod
     def to_dict(self):
+        pass
+
+
+class JSONABC(ABC):
+    """ Абстрактный класс для работы с Json-файлом """
+
+    def open_json(self):
+        pass
+
+    def add_vacancy(self, vacancy):
+        pass
+
+    def delete_vacancy(self, vacancy):
         pass

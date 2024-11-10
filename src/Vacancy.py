@@ -39,18 +39,21 @@ class Vacancy(VacancyABC):
 
     @staticmethod
     def __validation_salary(salary):
+        """ Валидация по наличию зарплаты "salary" """
         if salary:
             return salary
         return "Не указана"
 
     @staticmethod
     def __validation_requirement(requirement):
+        """ Валидация по наличию требований "requirement" """
         if requirement:
             return requirement
         return "Не указаны"
 
     @classmethod
     def cast_to_object_list(cls, vacancies: list):
+        """ Сборка списка вакансий в том виде который мы определили (dict_vac) """
         new_list = []
         for vacancy in vacancies:
             name = vacancy.get("name")
@@ -87,6 +90,7 @@ class Vacancy(VacancyABC):
 
     @classmethod
     def __isinstance_data(cls, other):
+        """ Проверка other на принадлежность к классу """
         if not isinstance(other, Vacancy):
             raise TypeError("Операнд справа должен быть экземпляром класса Vacancy")
         else:
@@ -105,6 +109,6 @@ class Vacancy(VacancyABC):
         return self.salary <= sal_3
 
     def to_dict(self):
-        """Возвращает словарь с данными о вакансии из экземпляра класса Vacancy"""
+        """ Возвращает словарь с данными о вакансии из экземпляра класса Vacancy """
         return {"name": self.name, "alternate_url": self.alternate_url, "salary": self.salary,
                 "requirement": self.requirement}

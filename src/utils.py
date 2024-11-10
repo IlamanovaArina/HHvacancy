@@ -9,6 +9,7 @@ def filter_vacancies(vacancies_list, filter_words):
 
 
 def get_vacancies_by_salary(filtered_vacancies, salary_range):
+    """ Функция для отбора вакансий по зарплате в определённом ценовом диапазоне """
     salary_list = salary_range.split("-")
     # print(salary_list)
     new_list = []
@@ -19,6 +20,7 @@ def get_vacancies_by_salary(filtered_vacancies, salary_range):
 
 
 def sort_vacancies(vacancies_list):
+    """ Функция возвращает отсортированный по возрастанию зарплаты список вакансий """
     sorted_vacancies = sorted(vacancies_list, key=lambda vacancies_list: vacancies_list["salary"], reverse=True)
     return sorted_vacancies
 
@@ -32,6 +34,7 @@ def get_top_vacancies(sorted_vacancies, top_n):
 
 
 def print_vacancies(top_vacancies):
+    """ Функция, выводящая вакансии (str) """
     dict_vac = []
     for vac in top_vacancies:
         dict_vac.append(f"\nВакансия: {vac.get("name")}\n"
