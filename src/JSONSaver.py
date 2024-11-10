@@ -1,20 +1,7 @@
-from abc import ABC, abstractmethod
-from json import JSONDecodeError
-
-from src.Vacancy import Vacancy
-import os
 
 import json
-
-# class JSONABC(ABC):
-
-    # @abstractmethod
-    # def json_add(self):
-    #     pass
-    #
-    # @abstractmethod
-    # def json_del(self):
-    #     pass
+import os
+from json import JSONDecodeError
 
 
 class JSONSaver:
@@ -46,8 +33,8 @@ class JSONSaver:
             return "Данная вакансия уже существует"
 
     def delete_vacancy(self, vacancy):
-        open_json = self.open_json() # [{}, {}, {}]
-        new_list_url = [] # "<grger>"
+        open_json = self.open_json()
+        new_list_url = []
         for vacancy_dict in open_json:
             new_list_url.append(vacancy_dict.get("alternate_url"))
         if vacancy.alternate_url in new_list_url:
@@ -59,11 +46,3 @@ class JSONSaver:
 
         with open(self.path, "w") as file:
             json.dump(open_json, file, ensure_ascii=False, indent=4)
-
-
-if __name__ == "__main__":
-    vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123479>", "2",
-                      "Опыт работы от 3 лет...", "1", "100 000-150 000 руб.")
-    obj = JSONSaver("data.json")
-    # obj.add_vacancy(vacancy)
-    obj.delete_vacancy(vacancy)

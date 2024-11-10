@@ -1,8 +1,8 @@
 import requests
 from requests import RequestException
+
 from src.abstract_class import Parser
 
-BASE_URL = "путь"
 
 class HeadHunterAPI(Parser):
     """
@@ -38,9 +38,3 @@ class HeadHunterAPI(Parser):
             self.__vacancies.extend(vacancies)
             self.__params['page'] += 1
         return self.__vacancies
-
-
-if __name__ == "__main__":
-    api = HeadHunterAPI()
-    api.load_vacancies("Python")
-    vacans = api.vacancies
