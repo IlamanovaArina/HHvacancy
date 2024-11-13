@@ -110,5 +110,10 @@ class Vacancy(VacancyABC):
 
     def to_dict(self):
         """ Возвращает словарь с данными о вакансии из экземпляра класса Vacancy """
-        return {"name": self.name, "alternate_url": self.alternate_url, "salary": self.salary,
-                "requirement": self.requirement}
+        return {"name": self.name,
+                "alternate_url": self.alternate_url,
+                "salary": self.salary,
+                "requirement": self.requirement,
+                "responsibility": self.responsibility,
+                "schedule": self.schedule,
+                }

@@ -14,8 +14,8 @@ class VacancyABC:
     """ Абстрактный класс для работы с полученными
     вакансиями и приведения к определённому виду """
 
-    @abstractmethod
     @classmethod
+    @abstractmethod
     def cast_to_object_list(cls, vacancies: list):
         pass
 
@@ -26,6 +26,9 @@ class VacancyABC:
 
 class JSONABC(ABC):
     """ Абстрактный класс для работы с Json-файлом """
+
+    def writing_data_to_file(self):
+        pass
 
     def open_json(self):
         pass

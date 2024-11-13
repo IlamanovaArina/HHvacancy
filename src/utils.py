@@ -43,6 +43,6 @@ def print_vacancies(top_vacancies):
                         f"Требования: {vac.get("requirement")}\n"
                         f"Ответственность: {vac.get("responsibility")}\n"
                         f"График: {vac.get("schedule")}\n"
-                        f"{'--'*20}")
+                        f"{'-'*40}")
 
     print(*dict_vac)

@@ -15,19 +15,9 @@ if __name__ == "__main__":
     # Преобразование набора данных из JSON в список объектов
     vacancies_list = Vacancy.cast_to_object_list(hh_vacancies)
 
-    # Пример работы контструктора класса с одной вакансией
-    vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123456>", 10000,
-                      "Требования: опыт работы от 3 лет...", "Ответственность: ...", "Полный день")
-
-    # Сохранение информации о вакансиях в файл
-    json_saver = JSONSaver()
-    json_saver.add_vacancy(vacancy)
-    json_saver.delete_vacancy(vacancy)
-
     # Функция для взаимодействия с пользователем
     def user_interaction():
         """ Функция для взамиодействия с пользователем """
-        platforms = ["HeadHunter"]
         top_n = int(input("Введите количество вакансий для вывода в топ N: "))
         filter_words = input("Введите ключевые слова для фильтрации вакансий: ").split()
         salary_range = input("Введите диапазон зарплат: ")  # Пример: 100000 - 150000
@@ -40,5 +30,15 @@ if __name__ == "__main__":
         top_vacancies = get_top_vacancies(sorted_vacancies, top_n)  # (sorted_vacancies, top_n)
 
         print_vacancies(top_vacancies)
+
+        # Пример работы контструктора класса с одной вакансией
+        vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123456>", 10000,
+                          "Требования: опыт работы от 3 лет...", "Ответственность: ...", "Полный день")
+
+        # Сохранение информации о вакансиях в файл
+        json_saver = JSONSaver(top_vacancies)
+        json_saver.writing_data_to_file()
+        json_saver.add_vacancy(vacancy)
+        json_saver.delete_vacancy(vacancy)
 
     user_interaction()
