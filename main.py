@@ -7,27 +7,27 @@ if __name__ == "__main__":
     # Создание экземпляра класса для работы с API сайтов с вакансиями
     hh_api = HeadHunterAPI()
 
-    search_query = input("Введите поисковый запрос: ")
+    search_query: str = input("Введите поисковый запрос: ")
 
     # Получение вакансий с hh.ru в формате JSON
-    hh_vacancies = hh_api.load_vacancies(search_query)
+    hh_vacancies: list = hh_api.load_vacancies(search_query)
 
     # Преобразование набора данных из JSON в список объектов
-    vacancies_list = Vacancy.cast_to_object_list(hh_vacancies)
+    vacancies_list: list[dict] = Vacancy.cast_to_object_list(hh_vacancies)
 
     # Функция для взаимодействия с пользователем
     def user_interaction():
         """ Функция для взамиодействия с пользователем """
         top_n = int(input("Введите количество вакансий для вывода в топ N: "))
-        filter_words = input("Введите ключевые слова для фильтрации вакансий: ").split()
-        salary_range = input("Введите диапазон зарплат: ")  # Пример: 100000 - 150000
+        filter_words: list = input("Введите ключевые слова для фильтрации вакансий: ").split()
+        salary_range: str = input("Введите диапазон зарплат: ")  # Пример: 100000 - 150000
 
-        filtered_vacancies = filter_vacancies(vacancies_list, filter_words)
+        filtered_vacancies: list = filter_vacancies(vacancies_list, filter_words)
 
-        ranged_vacancies = get_vacancies_by_salary(filtered_vacancies, salary_range)
+        ranged_vacancies: list = get_vacancies_by_salary(filtered_vacancies, salary_range)
 
-        sorted_vacancies = sort_vacancies(ranged_vacancies)
-        top_vacancies = get_top_vacancies(sorted_vacancies, top_n)  # (sorted_vacancies, top_n)
+        sorted_vacancies: list = sort_vacancies(ranged_vacancies)
+        top_vacancies: list = get_top_vacancies(sorted_vacancies, top_n)
 
         print_vacancies(top_vacancies)
 

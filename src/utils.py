@@ -11,7 +11,6 @@ def filter_vacancies(vacancies_list, filter_words):
 def get_vacancies_by_salary(filtered_vacancies, salary_range):
     """ Функция для отбора вакансий по зарплате в определённом ценовом диапазоне """
     salary_list = salary_range.split("-")
-    # print(salary_list)
     new_list = []
     for vac in filtered_vacancies:
         if int(salary_list[0]) <= vac["salary"] <= int(salary_list[1]):

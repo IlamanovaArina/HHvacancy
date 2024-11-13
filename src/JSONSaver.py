@@ -3,19 +3,16 @@ import json
 import os
 from json import JSONDecodeError
 
+from src.Vacancy import Vacancy
 from src.abstract_class import JSONABC
 
 
 class JSONSaver(JSONABC):
 
-    def __init__(self, vacancies_list: list[dict], name="data.json"):
-        self.name = name
-        self.path = os.path.join(os.path.dirname(__file__), "..", "data", self.name)
+    def __init__(self, vacancies_list: list[dict], name: str = "data.json"):
+        self.__name = name
+        self.path = os.path.join(os.path.dirname(__file__), "..", "data", self.__name)
         self.vacancies_list = vacancies_list
-
-    # @property
-    # def name(self):
-    #     return self.name
 
     def open_json(self):
         """ Метод открывающий json-файл, если возникает
@@ -31,21 +28,18 @@ class JSONSaver(JSONABC):
 
     def writing_data_to_file(self):
         vacancy_list = self.open_json()
-
         new_list = []
-
         for vacancy_dict in vacancy_list:
             new_list.append(vacancy_dict.get("alternate_url"))
-
         for vac in self.vacancies_list:
             if vac.get("alternate_url") not in new_list:
                 vacancy_list.append(vac)
                 with open(self.path, "w") as f:
                     json.dump(vacancy_list, f, ensure_ascii=False, indent=4)
 
-    def add_vacancy(self, vacancy):
+    def add_vacancy(self, vacancy: Vacancy):
         """ Метод для добавления вакансии в файл json """
-        vacancy_list = self.open_json()
+        vacancy_list: list = self.open_json()
         new_list = []
         for vacancy_dict in vacancy_list:
             new_list.append(vacancy_dict.get("alternate_url"))
@@ -56,9 +50,9 @@ class JSONSaver(JSONABC):
         else:
             return "Данная вакансия уже существует"
 
-    def delete_vacancy(self, vacancy):
+    def delete_vacancy(self, vacancy: Vacancy):
         """ Метод для удаления вакансии из json-файла """
-        open_json = self.open_json()
+        open_json: list = self.open_json()
         new_list_url = []
         for vacancy_dict in open_json:
             new_list_url.append(vacancy_dict.get("alternate_url"))

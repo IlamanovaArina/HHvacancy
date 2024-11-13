@@ -31,7 +31,7 @@ class HeadHunterAPI(Parser):
         except Exception as e:
             print(e)
 
-    def load_vacancies(self, keyword):
+    def load_vacancies(self, keyword: str):
         """ Данный метод позволяет отобрать всю информацию по вакансиям,
         в котором есть ключевое слово (переменная - keyword) """
         self.__params['text'] = keyword
