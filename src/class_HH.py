@@ -1,8 +1,8 @@
 import requests
 from requests import RequestException
+
 from src.abstract_class import Parser
 
-BASE_URL = "путь"
 
 class HeadHunterAPI(Parser):
     """
@@ -21,6 +21,7 @@ class HeadHunterAPI(Parser):
         return self.__vacancies
 
     def __connect(self):
+        """ Метод для get запроса """
         try:
             response = requests.get(self.__url, headers=self.__headers, params=self.__params)
             if response.status_code == 200:
@@ -30,7 +31,9 @@ class HeadHunterAPI(Parser):
         except Exception as e:
             print(e)
 
-    def load_vacancies(self, keyword):
+    def load_vacancies(self, keyword: str):
+        """ Данный метод позволяет отобрать всю информацию по вакансиям,
+        в котором есть ключевое слово (переменная - keyword) """
         self.__params['text'] = keyword
         while self.__params.get('page') != 5:
             response = self.__connect()
@@ -38,9 +41,3 @@ class HeadHunterAPI(Parser):
             self.__vacancies.extend(vacancies)
             self.__params['page'] += 1
         return self.__vacancies
-
-
-if __name__ == "__main__":
-    api = HeadHunterAPI()
-    api.load_vacancies("Python")
-    vacans = api.vacancies
